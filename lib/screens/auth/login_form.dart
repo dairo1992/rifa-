@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rifa_plus/helpers/alerts.dart';
-import 'package:rifa_plus/widgets/custom_button.dart';
-import 'package:rifa_plus/widgets/custom_textField.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rifa_plus/providers/conectity_status.dart';
+import 'package:rifa_plus/widgets/widgets.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends ConsumerWidget {
   LoginForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -11,7 +11,8 @@ class LoginForm extends StatelessWidget {
   final _passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final status = ref.watch(connectivityProvider);
     return SizedBox(
       width:
           MediaQuery.of(context).size.width > 320
@@ -21,6 +22,7 @@ class LoginForm extends StatelessWidget {
         key: _formKey,
         child: Column(
           children: [
+            Text("Estado de conexion: ${status.isOnline}"),
             CustomTextField(
               label: 'Correo electrónico',
               prefixIcon: Icons.email_outlined,
@@ -60,11 +62,6 @@ class LoginForm extends StatelessWidget {
               onPressed: () async {
                 // if (tipe != 'google') {
                 // if (_formKey.currentState!.validate()) {
-                final confirmed = await AlertManager.instance.showConfirmDialog(
-                  title: 'Eliminar rifa',
-                  message: '¿Estás seguro de que quieres eliminar esta rifa?',
-                  isDestructive: true,
-                );
                 // ref
                 //     .read(authProvider.notifier)
                 //     .login(
