@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:rifa_plus/helpers/alerts.dart';
+import 'package:rifa_plus/widgets/custom_button.dart';
+import 'package:rifa_plus/widgets/custom_textField.dart';
+
+class LoginForm extends StatelessWidget {
+  LoginForm({super.key});
+
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width:
+          MediaQuery.of(context).size.width > 320
+              ? 320
+              : MediaQuery.of(context).size.width,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            CustomTextField(
+              label: 'Correo electrónico',
+              prefixIcon: Icons.email_outlined,
+              controller: _emailController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese su correo';
+                }
+                if (!RegExp(
+                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                ).hasMatch(value)) {
+                  return 'Por favor ingrese un correo válido';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.emailAddress,
+            ),
+            const SizedBox(height: 16),
+            CustomTextField(
+              label: 'Contraseña',
+              prefixIcon: Icons.lock_outline,
+              obscureText: true,
+              controller: _passwordController,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Por favor ingrese su contraseña';
+                }
+                if (value.length < 6) {
+                  return 'La contraseña debe tener al menos 6 caracteres';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            CustomButton(
+              text: 'Iniciar sesion',
+              onPressed: () async {
+                // if (tipe != 'google') {
+                // if (_formKey.currentState!.validate()) {
+                final confirmed = await AlertManager.instance.showConfirmDialog(
+                  title: 'Eliminar rifa',
+                  message: '¿Estás seguro de que quieres eliminar esta rifa?',
+                  isDestructive: true,
+                );
+                // ref
+                //     .read(authProvider.notifier)
+                //     .login(
+                //       'emailAndPassword',
+                //       _emailController.text,
+                //       _passwordController.text,
+                //     );
+                // }
+                // } else {
+                //   // ref.read(authProvider.notifier).login('google', null, null);
+                // }
+              },
+              isLoading: false,
+            ),
+            SizedBox(height: 10),
+            // SizedBox(
+            //   width: double.infinity,
+            //   child: SignInButton(
+            //     Buttons.google,
+            //     text: "INGRESA CON GOOGLE",
+            //     onPressed: () => _submitForm('google'),
+            //   ),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}

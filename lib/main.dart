@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rifa_plus/config/custom_theme.dart';
 import 'package:rifa_plus/config/routes.dart';
+import 'package:rifa_plus/helpers/alerts.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
@@ -10,9 +13,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AlertManager.instance.initialize(context);
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: routes,
+      theme: custom_theme,
     );
   }
 }
