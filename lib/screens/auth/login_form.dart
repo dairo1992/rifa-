@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:rifa_plus/providers/conectity_status.dart';
+import 'package:go_router/go_router.dart';
+import 'package:rifa_plus/providers/auth/auth_provider.dart';
+import 'package:rifa_plus/providers/helper/conectity_status.dart';
 import 'package:rifa_plus/widgets/widgets.dart';
 
 class LoginForm extends ConsumerWidget {
@@ -13,6 +15,8 @@ class LoginForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final status = ref.watch(connectivityProvider);
+    final authState = ref.watch(authProvider);
+
     return SizedBox(
       width:
           MediaQuery.of(context).size.width > 320
@@ -22,7 +26,7 @@ class LoginForm extends ConsumerWidget {
         key: _formKey,
         child: Column(
           children: [
-            Text("Estado de conexion: ${status.isOnline}"),
+            Text("Estado de conexion: ${authState.isAuthenticated}"),
             CustomTextField(
               label: 'Correo electrónico',
               prefixIcon: Icons.email_outlined,
@@ -61,18 +65,25 @@ class LoginForm extends ConsumerWidget {
               text: 'Iniciar sesion',
               onPressed: () async {
                 // if (tipe != 'google') {
-                // if (_formKey.currentState!.validate()) {
-                // ref
-                //     .read(authProvider.notifier)
-                //     .login(
-                //       'emailAndPassword',
-                //       _emailController.text,
-                //       _passwordController.text,
-                //     );
-                // }
-                // } else {
-                //   // ref.read(authProvider.notifier).login('google', null, null);
-                // }
+                if (_formKey.currentState!.validate()) {
+                  ref
+                      .read(authProvider.notifier)
+                      .login(
+                        _emailController.text,
+                        _passwordController.text,
+                        status.isOnline,
+                      );
+                  // ref
+                  //     .read(authProvider.notifier)
+                  //     .login(
+                  //       'emailAndPassword',
+                  //       _emailController.text,
+                  //       _passwordController.text,
+                  //     );
+                  // }
+                  // } else {
+                  //   // ref.read(authProvider.notifier).login('google', null, null);
+                }
               },
               isLoading: false,
             ),

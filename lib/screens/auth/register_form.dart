@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rifa_plus/providers/auth/auth_provider.dart';
+import 'package:rifa_plus/providers/helper/conectity_status.dart';
 import 'package:rifa_plus/widgets/custom_button.dart';
 import 'package:rifa_plus/widgets/custom_textField.dart';
 
-class RegisterForm extends StatelessWidget {
+class RegisterForm extends ConsumerWidget {
   RegisterForm({super.key});
 
   final _formKey = GlobalKey<FormState>();
@@ -12,11 +15,14 @@ class RegisterForm extends StatelessWidget {
   final _passwordController = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final conexionState = ref.watch(connectivityProvider);
+    final authState = ref.watch(authProvider);
     return Form(
       key: _formKey,
       child: Column(
         children: [
+          Text("Estado de authenticacion ${authState.isAuthenticated}"),
           CustomTextField(
             label: 'Nombre',
             prefixIcon: Icons.person,
@@ -87,9 +93,13 @@ class RegisterForm extends StatelessWidget {
           CustomButton(
             text: 'Registrarse',
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate()) {
+                ref
+                    .read(authProvider.notifier)
+                    .register(_emailController.text, _passwordController.text, conexionState.isOnline);
+              }
             },
-            isLoading: false,
+            isLoading: authState.isLoading,
           ),
         ],
       ),

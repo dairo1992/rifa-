@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "374301250242",
+    "project_id": "rifa-plus-2c038",
+    "storage_bucket": "rifa-plus-2c038.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374301250242:android:a9ab5bf4d9b27e7a5b215b",
+        "android_client_info": {
+          "package_name": "com.example.rifa_plus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCh1MJJL9eubBAcaqJF84LQh_3zNTXh5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
