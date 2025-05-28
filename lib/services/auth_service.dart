@@ -29,19 +29,17 @@ class AuthService {
     String email,
     String password,
   ) async {
-    // try {
-    //   final resp = await _firebaseAuth.createUserWithEmailAndPassword(
-    //     email: email,
-    //     password: password,
-    //   );
-    //   return {"STATUS": true, "MSG": resp};
-    // } on FirebaseAuthException catch (e) {
-    //   return {"STATUS": true, "MSG": e.message};
-    // } catch (e) {
-    //   return {"STATUS": true, "MSG": e.toString()};
-    // }
-
-    return {"STATUS": true, "MSG": "Registro local"};
+    try {
+      final resp = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      return {"STATUS": true, "MSG": resp};
+    } on FirebaseAuthException catch (e) {
+      return {"STATUS": true, "MSG": e.message};
+    } catch (e) {
+      return {"STATUS": true, "MSG": e.toString()};
+    }
   }
 
   Future<Map<String, dynamic>> login(String email, String password) async {
@@ -73,6 +71,6 @@ class AuthService {
     // } catch (e) {
     //   return {"STATUS": false, "MSG": e.toString()};
     // }
-      return {"STATUS": false, "MSG": "login offile"};
+    return {"STATUS": false, "MSG": "login offile"};
   }
 }
