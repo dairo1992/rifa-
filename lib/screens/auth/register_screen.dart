@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rifa_plus/screens/auth/register_form.dart';
-import 'package:rifa_plus/widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});

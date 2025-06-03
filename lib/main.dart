@@ -5,9 +5,11 @@ import 'package:rifa_plus/config/custom_theme.dart';
 import 'package:rifa_plus/config/routes.dart';
 import 'package:rifa_plus/firebase_options.dart';
 import 'package:rifa_plus/helpers/alerts.dart';
+import 'package:rifa_plus/services/datebase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseService.initialize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const ProviderScope(child: MainApp()));
 }
